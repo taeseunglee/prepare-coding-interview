@@ -4,7 +4,8 @@
 #include "./binarySearchTree.h"
 
 binarySearchTree bst;
-int arr[] = {1, 2, 5, 7 , 8, 15, 123, 34, 1000, 52};
+// int arr[] = {1, 2, 5, 7 , 8, 15, 123, 34, 1000, 52}; // test 1
+int arr[] = {5, 8, 15, 123, 34, 1000, 52}; // test2
 
 void makeMinimalTree(int startIdx, int endIdx);
 
@@ -25,8 +26,10 @@ int main() {
 }
 
 void makeMinimalTree(int startIdx, int endIdx) {
-    int midIdx = (startIdx + endIdx) / 2;
-    bst.insert (arr[midIdx]);
-    makeMinimalTree(startIdx, midIdx-1);
-    makeMinimalTree(midIdx+1, endIdx);
+    if (startIdx <= endIdx) {
+        int midIdx = (startIdx + endIdx) / 2;
+        bst.insert (arr[midIdx]);
+        makeMinimalTree(startIdx, midIdx-1);
+        makeMinimalTree(midIdx+1, endIdx);
+    }
 }

@@ -16,7 +16,7 @@ class binarySearchTree {
         void inorder();
     private:
         node *root;
+        int height;
         void inorderRecur(node *root);
         void destroyTree(node *root);
-        node *search(int key, node *root);
 };

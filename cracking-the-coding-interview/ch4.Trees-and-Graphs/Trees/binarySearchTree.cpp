@@ -1,7 +1,10 @@
-#include <cstdio.h>
+#include <cstdio>
 #include "./binarySearchTree.h"
 
-binarySearchTree::binarySearchTree() { root = NULL; }
+binarySearchTree::binarySearchTree() {
+    root = NULL;
+    height = 0;
+}
 binarySearchTree::~binarySearchTree() { destroyTree(); }
 
 void binarySearchTree::insert(int key) {
@@ -9,37 +12,38 @@ void binarySearchTree::insert(int key) {
     newNode->key = key;
     newNode->left = newNode->right = NULL;
 
-    node *cur_node = root;
-    while (cur_node) {
-        if (key < cur_node->key) {
-            if (!cur_node->left) {
-                cur_node->left = newNode;
+    node *curNode = root;
+    while (curNode) {
+        if (key < curNode->key) {
+            if (!curNode->left) {
+                curNode->left = newNode;
                 return ;
             }
-            cur_node = cur_node->left;
+            curNode = curNode->left;
         }
-        else if (key > cur_node->key) {
-            if (!cur_node->right) {
-                cur_node->right = newNode;
+        else if (key > curNode->key) {
+            if (!curNode->right) {
+                curNode->right = newNode;
                 return ;
             }
-            cur_node = cur_node->right;
+            curNode = curNode->right;
         }
         else { return ; } // not insert node
     }
+    root = newNode;
 }
 
 node *binarySearchTree::search(int key) {
-    if(root!=NULL)
-    {
-        if(key==root->key)
-            return root;
-        if(key<root->key)
-            return search(key, root->left);
+    node *curNode = root;
+    while (curNode) {
+        if(key==curNode->key)
+            return curNode;
+        if(key<curNode->key)
+            curNode = curNode->left;
         else
-            return search(key, root->right);
+            curNode = curNode->right;
     }
-    else return NULL;
+    return NULL;
 }
 
 void binarySearchTree::destroyTree()
@@ -58,13 +62,19 @@ void binarySearchTree::destroyTree(node *root) {
 void binarySearchTree::inorder() {
     printf("binarySearchTree order: ");
     inorderRecur(root);
-    printf("\n");
+    printf("\nheight = %d\n", height);
 }
 
 void binarySearchTree::inorderRecur(node *root) {
+    static int depth = 0;
     if (root) {
+        ++ depth;
         inorderRecur(root->left);
         printf("%d ", root->key);
         inorderRecur(root->right);
+        
+        if (depth > height)
+            height = depth;
+        -- depth;
     }
 }

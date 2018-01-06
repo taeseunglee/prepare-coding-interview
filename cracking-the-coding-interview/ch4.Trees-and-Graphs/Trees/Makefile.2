@@ -1,0 +1,9 @@
+# how to make: make -f Makefile.2
+
+all:
+	g++ -c ./binarySearchTree.cpp
+	g++ -c ./2.minimalTreeMain.cpp
+	g++ -o ./2.minimalTreeMain binarySearchTree.o 2.minimalTreeMain.o
+
+clean:
+	rm -rf binarySearchTree.o 2.minimalTreeMain.o ./2.minimalTreeMain
